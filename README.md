@@ -12,6 +12,7 @@ final class MyExtension: ConnectableExtension {
 		throw ConnectableExtensionError.connectionUnsupported
 	}
 }
+```
 
 And now, you can set up an extension with just like this:
 
