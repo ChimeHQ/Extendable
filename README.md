@@ -27,6 +27,10 @@ final class ExampleExtension: AppExtension {
 }
 ```
 
+## SwiftUI Wrappers
+
+You can use `AppExtensionBrowserView` and `ExtensionHostingView` to integrate the ExtensionKit view system with SwiftUI. Neither are complicated, but nice to have.
+
 ### Suggestions or Feedback
 
 We'd love to hear from you! Get in touch via [twitter](https://twitter.com/chimehq), an issue, or a pull request.
