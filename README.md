@@ -55,11 +55,11 @@ struct ConnectionView: View {
 }
 ```
 
-Note that `ConnectableSceneExtension` is designed to support mulitple scene ids. But, as of Ventura Beta 6, I am not able to determine how you configfure an extension for more than one scene.
+Note that `ConnectableSceneExtension` is designed to support mulitple scene ids. But, as of Ventura Beta 6, I am not able to determine how you configure an extension for more than one scene.
 
 ## SwiftUI Wrappers
 
-You can use `AppExtensionBrowserView` and `ExtensionHostingView` to integrate the ExtensionKit view system with SwiftUI. Neither are complicated, but nice to have.
+You can use `AppExtensionBrowserView` and `ExtensionHostingView` to integrate the ExtensionKit view system with SwiftUI. Neither are complicated, but nice to have. These are within a seperate "ExtendableViews" library.
 
 ### Suggestions or Feedback
 
