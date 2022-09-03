@@ -1,9 +1,9 @@
 # Extendable
 A set of utilities for more pleasant work with ExtensionKit
 
-## Simpler NSXPCConnection management
+## Global Connection
 
-Setting up an ExtensionKit extension can be confusing, and requires a fair amount of boilerplate. Check out `ConnectableExtension`:
+Setting up an ExtensionKit extension can be confusing, and requires a fair amount of boilerplate. `ConnectableExtension` makes it easier to manage the global host connection.
 
 ```swift
 @main
@@ -18,7 +18,27 @@ final class ExampleExtension: ConnectableExtension {
 }
 ```
 
-Dealing with View-based extensions is even more complex. And, there isn't a clear way to get access to the host connection in your views. `ConnectableSceneExtension` makes this way simpler.
+## Scenes
+
+Dealing with View-based extensions is even more complex. And, there isn't a clear way to get access to the host connection in your views. Extendable comes with a few components that make it easier to build scenes and manage view connections.
+
+### ConnectingAppExtensionScene
+
+This is a `AppExtensionScene` that makes it easier to get access to the scene's connection within your `View`.
+
+```swift
+ConnectingAppExtensionScene(sceneID: "one") { (sceneId, connection) in
+    try ConnectionView(sceneId: sceneId, connection: connection)
+}
+```
+
+### AppExtensionSceneGroup
+
+I expect this type won't be needed once Ventura ships. And, maybe it's just me, but I've been unable to figure out how to use `AppExtensionSceneBuilder` without a wrapper type. So here it is.
+
+### Example View
+
+You can use `ConnectingAppExtensionScene` and `AppExtensionSceneGroup` independently, or as part of a more standard extension structure. But, if you want, you can also make use of the `ConnectableSceneExtension` protocol to really streamline your view class. Here's a full example:
 
 ```swift
 @main
@@ -30,14 +50,26 @@ final class ViewExtension: ConnectableSceneExtension {
         // handle global connection
     }
     
-    func scene(for id: String, connection: NSXPCConnection?) throws -> Body
-        // optionally handle per-view connection
-        return ConnectionView(connection: connection)
+    var scene: some AppExtensionScene {
+        AppExtensionSceneGroup {
+            ConnectingAppExtensionScene(sceneID: "one") { (sceneId, connection) in
+                try ConnectionView(sceneId: sceneId, connection: connection)
+            }
+            ConnectingAppExtensionScene(sceneID: "two") { (sceneId, connection) in
+                try ConnectionView(sceneId: sceneId, connection: connection)
+            }
+        }
     }
 }
 
 struct ConnectionView: View {
+    let sceneName: String
     let connection: NSXPCConnection?
+
+    init(sceneId: String, connection: NSXPCConnection?) throws {
+        self.sceneName = sceneId
+        self.connection = connection
+    }
 
     var value: String {
         return String(describing: connection)
@@ -47,7 +79,7 @@ struct ConnectionView: View {
         VStack {
             Rectangle().frame(width: nil, height: 4).foregroundColor(.green)
             Spacer()
-            Text("hmmm: \(value)")
+            Text("\(sceneName): \(value)")
             Spacer()
             Rectangle().frame(width: nil, height: 4).foregroundColor(.red)
         }
@@ -55,11 +87,9 @@ struct ConnectionView: View {
 }
 ```
 
-Note that `ConnectableSceneExtension` is designed to support mulitple scene ids. But, as of Ventura Beta 6, I am not able to determine how you configure an extension for more than one scene.
-
 ## SwiftUI Wrappers
 
-You can use `AppExtensionBrowserView` and `ExtensionHostingView` to integrate the ExtensionKit view system with SwiftUI. Neither are complicated, but nice to have. These are within a seperate "ExtendableViews" library.
+Extendable also includes a second library called `ExtendableViews`. You can its `AppExtensionBrowserView` and `ExtensionHostingView` to integrate the ExtensionKit view system with SwiftUI in your host application.
 
 ### Suggestions or Feedback
 
