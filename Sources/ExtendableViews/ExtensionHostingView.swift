@@ -1,3 +1,4 @@
+#if compiler(>=5.7)
 import ExtensionKit
 import SwiftUI
 
@@ -61,3 +62,4 @@ extension ExtensionHostingView {
 		}
 	}
 }
+#endif

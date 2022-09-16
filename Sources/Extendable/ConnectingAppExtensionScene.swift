@@ -1,3 +1,4 @@
+#if compiler(>=5.7)
 import ExtensionKit
 import SwiftUI
 
@@ -53,3 +54,4 @@ public struct ConnectingAppExtensionScene<Content: View>: AppExtensionScene {
 		}
 	}
 }
+#endif

@@ -1,10 +1,10 @@
-// swift-tools-version: 5.6
+// swift-tools-version:5.5
 
 import PackageDescription
 
 let package = Package(
 	name: "Extendable",
-	platforms: [.macOS(.v10_15)],
+	platforms: [.macOS(.v11), .iOS(.v14), .watchOS(.v7), .tvOS(.v14)],
 	products: [
 		.library(name: "Extendable", targets: ["Extendable"]),
 		.library(name: "ExtendableViews", targets: ["ExtendableViews"]),

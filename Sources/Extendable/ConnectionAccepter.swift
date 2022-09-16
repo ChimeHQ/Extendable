@@ -3,7 +3,6 @@ import os.log
 
 public typealias ConnectionHandler = (NSXPCConnection) throws -> Void
 
-@available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *)
 struct ConnectionAccepter {
 	private let logger = Logger(subsystem: "com.chimehq.Extendable", category: "ConnectionAccepter")
 
@@ -21,7 +20,12 @@ struct ConnectionAccepter {
 
 			logger.debug("accepted connection")
 
+			#if compiler(>=5.7)
+			// this API is available in 11.0, but only exposed in the headers for 13.0
 			connection.activate()
+			#else
+			connection.resume()
+			#endif
 
 			return true
 		} catch {

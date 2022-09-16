@@ -1,3 +1,4 @@
+#if compiler(>=5.7)
 import ExtensionKit
 import SwiftUI
 
@@ -13,3 +14,5 @@ public struct AppExtensionBrowserView: NSViewControllerRepresentable {
 	public func updateNSViewController(_ viewController: EXAppExtensionBrowserViewController, context: Context) {
 	}
 }
+
+#endif
