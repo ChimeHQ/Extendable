@@ -1,6 +1,7 @@
 [![Build Status][build status badge]][build status]
 [![License][license badge]][license]
 [![Platforms][platforms badge]][platforms]
+[![Documentation][documentation badge]][documentation]
 
 # Extendable
 A set of utilities for more pleasant work with ExtensionKit
@@ -107,3 +108,5 @@ Please note that this project is released with a [Contributor Code of Conduct](C
 [license badge]: https://img.shields.io/github/license/ChimeHQ/Extendable
 [platforms]: https://swiftpackageindex.com/ChimeHQ/Extendable
 [platforms badge]: https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FChimeHQ%2FExtendable%2Fbadge%3Ftype%3Dplatforms
+[documentation]: https://swiftpackageindex.com/ChimeHQ/Extendable/main/documentation
+[documentation badge]: https://img.shields.io/badge/Documentation-DocC-blue
