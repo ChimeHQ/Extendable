@@ -92,9 +92,16 @@ struct ConnectionView: View {
 }
 ```
 
-## SwiftUI Wrappers
+## ExtendableHost
 
-Extendable also includes a second library called `ExtendableViews`. You can its `AppExtensionBrowserView` and `ExtensionHostingView` to integrate the ExtensionKit view system with SwiftUI in your host application.
+Extendable also includes a second library called `ExtendableHost`.
+
+You can its `AppExtensionBrowserView` and `ExtensionHostingView` to integrate the ExtensionKit view system with SwiftUI in your host application.
+
+```swift
+// very simple init extension to help with actor-isolation compatibility
+let process = try await AppExtensionProcess(appExtensionIdentity: identity)
+```
 
 ### Suggestions or Feedback
 

@@ -7,12 +7,12 @@ let package = Package(
 	platforms: [.macOS(.v11), .iOS(.v14), .watchOS(.v7), .tvOS(.v14)],
 	products: [
 		.library(name: "Extendable", targets: ["Extendable"]),
-		.library(name: "ExtendableViews", targets: ["ExtendableViews"]),
+		.library(name: "ExtendableHost", targets: ["ExtendableHost"]),
 	],
 	dependencies: [],
 	targets: [
 		.target(name: "Extendable", dependencies: []),
-		.target(name: "ExtendableViews", dependencies: []),
+		.target(name: "ExtendableHost", dependencies: []),
 		.testTarget(name: "ExtendableTests", dependencies: ["Extendable"]),
 	]
 )
