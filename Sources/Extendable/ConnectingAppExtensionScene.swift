@@ -2,6 +2,7 @@
 import ExtensionKit
 import SwiftUI
 
+@MainActor
 private final class ConnectingSceneModel<Content: View>: ObservableObject {
 	@Published var view: Content
 
@@ -10,6 +11,7 @@ private final class ConnectingSceneModel<Content: View>: ObservableObject {
 	}
 }
 
+@MainActor
 private struct ConnectingView<Content: View>: View {
 	@ObservedObject var model: ConnectingSceneModel<Content>
 
@@ -24,6 +26,7 @@ private struct ConnectingView<Content: View>: View {
 
 /// An `AppExtensionScene` that generates content as function of the host connection.
 @available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *)
+@MainActor
 public struct ConnectingAppExtensionScene<Content: View>: AppExtensionScene {
 	public let sceneID: String
 	let accepter: ConnectionAccepter

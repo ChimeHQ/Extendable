@@ -40,6 +40,7 @@ public struct ExtensionHostingView: NSViewControllerRepresentable {
 
 @available(macOS 13.0, *)
 extension ExtensionHostingView {
+	@MainActor
 	public class Coordinator: NSObject, EXHostViewControllerDelegate {
 		public var connectionHandler: ConnectionHandler?
 
