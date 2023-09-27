@@ -1,6 +1,10 @@
-// swift-tools-version:5.5
+// swift-tools-version: 5.8
 
 import PackageDescription
+
+let settings: [SwiftSetting] = [
+	.enableExperimentalFeature("StrictConcurrency")
+]
 
 let package = Package(
 	name: "Extendable",
@@ -11,8 +15,8 @@ let package = Package(
 	],
 	dependencies: [],
 	targets: [
-		.target(name: "Extendable", dependencies: []),
-		.target(name: "ExtendableHost", dependencies: []),
-		.testTarget(name: "ExtendableTests", dependencies: ["Extendable"]),
+		.target(name: "Extendable", swiftSettings: settings),
+		.target(name: "ExtendableHost", swiftSettings: settings),
+		.testTarget(name: "ExtendableTests", dependencies: ["Extendable"], swiftSettings: settings),
 	]
 )
