@@ -1,4 +1,4 @@
-#if compiler(>=5.7) && os(macOS)
+#if os(macOS)
 import ExtensionKit
 import SwiftUI
 

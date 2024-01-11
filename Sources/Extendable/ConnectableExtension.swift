@@ -1,4 +1,3 @@
-#if compiler(>=5.7)
 import Foundation
 import ExtensionKit
 import SwiftUI
@@ -38,4 +37,3 @@ public extension ConnectableExtension {
 		return globalConfiguration
 	}
 }
-#endif

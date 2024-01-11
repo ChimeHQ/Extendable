@@ -1,4 +1,3 @@
-#if compiler(>=5.7)
 import ExtensionKit
 import SwiftUI
 
@@ -49,12 +48,13 @@ public struct ConnectingAppExtensionScene<Content: View>: AppExtensionScene {
 	}
 
 
-	public var body: some AppExtensionScene {
-		PrimitiveAppExtensionScene(id: sceneID) {
-			connectingView
-		} onConnection: { connection in
-			return accepter.accept(connection: connection)
+	public nonisolated var body: some AppExtensionScene {
+		MainActor.runUnsafely {
+			PrimitiveAppExtensionScene(id: sceneID) {
+				connectingView
+			} onConnection: { connection in
+				return accepter.accept(connection: connection)
+			}
 		}
 	}
 }
-#endif

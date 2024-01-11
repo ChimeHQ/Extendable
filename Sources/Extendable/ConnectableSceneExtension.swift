@@ -1,4 +1,3 @@
-#if compiler(>=5.7)
 import ExtensionKit
 import SwiftUI
 
@@ -21,4 +20,3 @@ public extension ConnectableSceneExtension {
 		return AppExtensionSceneConfiguration(scene, configuration: globalConfiguration)
 	}
 }
-#endif

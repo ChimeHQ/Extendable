@@ -1,4 +1,3 @@
-#if compiler(>=5.7)
 import ExtensionKit
 
 /// Can be used to group multiple `AppExtensionScene` views.
@@ -14,4 +13,3 @@ public struct AppExtensionSceneGroup<Content: AppExtensionScene>: AppExtensionSc
 		return content
 	}
 }
-#endif

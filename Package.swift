@@ -8,7 +8,13 @@ let settings: [SwiftSetting] = [
 
 let package = Package(
 	name: "Extendable",
-	platforms: [.macOS(.v11), .iOS(.v14), .watchOS(.v7), .tvOS(.v14)],
+	platforms: [
+		.macOS(.v11),
+		.macCatalyst(.v14),
+		.iOS(.v14),
+		.watchOS(.v7),
+		.tvOS(.v14)
+	],
 	products: [
 		.library(name: "Extendable", targets: ["Extendable"]),
 		.library(name: "ExtendableHost", targets: ["ExtendableHost"]),

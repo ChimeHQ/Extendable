@@ -1,4 +1,4 @@
-#if compiler(>=5.7) && os(macOS)
+#if os(macOS)
 import ExtensionKit
 import SwiftUI
 
@@ -48,17 +48,19 @@ extension ExtensionHostingView {
 			return true
 		}
 
-		public func hostViewControllerDidActivate(_ viewController: EXHostViewController) {
-			guard let handler = connectionHandler else { return }
+		public nonisolated func hostViewControllerDidActivate(_ viewController: EXHostViewController) {
+			MainActor.runUnsafely {
+				guard let handler = connectionHandler else { return }
 
-			do {
-				let connection = try viewController.makeXPCConnection()
+				do {
+					let connection = try viewController.makeXPCConnection()
 
-				handler(connection)
+					handler(connection)
 
-				connection.activate()
-			} catch {
-				print("Unable to create connection: \(String(describing: error))")
+					connection.activate()
+				} catch {
+					print("Unable to create connection: \(String(describing: error))")
+				}
 			}
 		}
 	}
