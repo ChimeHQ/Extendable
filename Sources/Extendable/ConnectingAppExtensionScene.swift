@@ -49,7 +49,7 @@ public struct ConnectingAppExtensionScene<Content: View>: AppExtensionScene {
 
 
 	public nonisolated var body: some AppExtensionScene {
-		MainActor.runUnsafely {
+		MainActor.assumeIsolated {
 			PrimitiveAppExtensionScene(id: sceneID) {
 				connectingView
 			} onConnection: { connection in

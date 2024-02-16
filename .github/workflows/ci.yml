@@ -14,12 +14,12 @@ on:
       - main
 
 env:
-  DEVELOPER_DIR: /Applications/Xcode_15.0.app/Contents/Developer
+  DEVELOPER_DIR: /Applications/Xcode_15.2.app/Contents/Developer
 
 jobs:
   test:
     name: Test
-    runs-on: macOS-13
+    runs-on: macOS-14
     strategy:
       matrix:
         destination:
@@ -28,7 +28,5 @@ jobs:
     
     steps:
       - uses: actions/checkout@v4
-      - name: Install XCBeautify
-        run: brew install xcbeautify
       - name: Test platform ${{ matrix.destination }}
-        run: set -o pipefail && xcodebuild -scheme Extendable-Package -destination "${{ matrix.destination }}" test | xcbeautify --renderer github-actions
+        run: set -o pipefail && xcodebuild -scheme Extendable-Package -destination "${{ matrix.destination }}" test | xcbeautify

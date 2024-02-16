@@ -49,7 +49,7 @@ extension ExtensionHostingView {
 		}
 
 		public nonisolated func hostViewControllerDidActivate(_ viewController: EXHostViewController) {
-			MainActor.runUnsafely {
+			MainActor.assumeIsolated {
 				guard let handler = connectionHandler else { return }
 
 				do {

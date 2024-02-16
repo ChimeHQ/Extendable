@@ -10,6 +10,9 @@
 # Extendable
 A set of utilities for more pleasant work with ExtensionKit
 
+> [!NOTE]
+> CI failure for the main branch is expected until Swift 5.10 is available in GitHub action images.
+
 ## Installation
 
 ```swift
@@ -123,6 +126,23 @@ You can its `AppExtensionBrowserView` and `ExtensionHostingView` to integrate th
 ```swift
 // very simple init extension to help with actor-isolation compatibility
 let process = try await AppExtensionProcess(appExtensionIdentity: identity)
+```
+
+## Isolation and AppExtension
+
+Currently, the `init` in the `AppExtention` protocol lacks any isolation. This makes it difficult to initialize instance variables if you are relying on the true-but-unexpressed `@MainActor` isolation of extensions. I've included a workaround that can help. SE-0414 will make this unecessary, as will ExtensionFoundation adding annotations. In the mean time though, it's nice to have no warnings.
+
+```swift
+@main
+final class MyExtension: AppExtension {
+	@InitializerTransferred private var value: MainActorType
+
+	nonisolated init() {
+		self._value = InitializerTransferred(mainActorProvider: {
+			MainActorType()
+		})
+	}
+}
 ```
 
 ## Contributing and Collaboration
