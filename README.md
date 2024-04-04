@@ -10,9 +10,6 @@
 # Extendable
 A set of utilities for more pleasant work with ExtensionKit
 
-> [!NOTE]
-> CI failure for the main branch is expected until Swift 5.10 is available in GitHub action images.
-
 ## Installation
 
 ```swift
