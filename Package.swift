@@ -2,10 +2,6 @@
 
 import PackageDescription
 
-let settings: [SwiftSetting] = [
-	.enableExperimentalFeature("StrictConcurrency")
-]
-
 let package = Package(
 	name: "Extendable",
 	platforms: [
@@ -21,8 +17,18 @@ let package = Package(
 	],
 	dependencies: [],
 	targets: [
-		.target(name: "Extendable", swiftSettings: settings),
-		.target(name: "ExtendableHost", swiftSettings: settings),
-		.testTarget(name: "ExtendableTests", dependencies: ["Extendable"], swiftSettings: settings),
+		.target(name: "Extendable"),
+		.target(name: "ExtendableHost"),
+		.testTarget(name: "ExtendableTests", dependencies: ["Extendable"]),
 	]
 )
+
+let swiftSettings: [SwiftSetting] = [
+	.enableExperimentalFeature("StrictConcurrency"),
+]
+
+for target in package.targets {
+	var settings = target.swiftSettings ?? []
+	settings.append(contentsOf: swiftSettings)
+	target.swiftSettings = settings
+}
