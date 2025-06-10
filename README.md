@@ -14,6 +14,8 @@ ExtensionKit and ExtensionFoundation provide a system for inter-app communcation
 
 The package is split into two parts. Most of the interesting stuff is on the extension-side. But, there are some handy things for hosting extensions as well.
 
+If you are here, two other packages you might like are [AsyncXPCConnection](https://github.com/ChimeHQ/AsyncXPCConnection) and [XPCConnectionSession](https://github.com/ChimeHQ/XPCConnectionSession).
+
 ## Installation
 
 ```swift
