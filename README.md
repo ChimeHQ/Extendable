@@ -8,7 +8,11 @@
 </div>
 
 # Extendable
-A set of utilities for more pleasant work with ExtensionKit
+A set of utilities for more pleasant work with [ExtensionKit](https://developer.apple.com/documentation/extensionkit).
+
+ExtensionKit and ExtensionFoundation provide a system for inter-app communcation and operation. They are very cool! For a long time, these frameworks were only functional on macOS, but it looks like they are now supported on other Apple platforms, including iOS. Pretty much everything here has only been tested on macOS, but I'll get to it!
+
+The package is split into two parts. Most of the interesting stuff is on the extension-side. But, there are some handy things for hosting extensions as well.
 
 ## Installation
 
@@ -30,7 +34,7 @@ targets: [
 
 ## Global Connection
 
-Setting up an ExtensionKit extension can be confusing, and requires a fair amount of boilerplate. `ConnectableExtension` makes it easier to manage the global host connection.
+Setting up an ExtensionKit extension can be confusing and requires a fair amount of boilerplate. `ConnectableExtension` makes it easier to manage the global host connection.
 
 ```swift
 @main
@@ -62,6 +66,8 @@ ConnectingAppExtensionScene(sceneID: "one") { (sceneId, connection) in
 ### AppExtensionSceneGroup
 
 I expect this type won't be needed once Ventura ships. And, maybe it's just me, but I've been unable to figure out how to use `AppExtensionSceneBuilder` without a wrapper type. So here it is.
+
+(me three years later, lol)
 
 ### Example View
 
