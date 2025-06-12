@@ -1,8 +1,7 @@
-#if os(macOS)
 import ExtensionKit
 import SwiftUI
 
-@available(macOS 13.0, *)
+@available(macOS 13.0, iOS 26, *)
 public struct ExtensionHostingView: NSViewControllerRepresentable {
 	public typealias ConnectionHandler = (NSXPCConnection) -> Void
 
@@ -38,9 +37,8 @@ public struct ExtensionHostingView: NSViewControllerRepresentable {
 	}
 }
 
-@available(macOS 13.0, *)
+@available(macOS 13.0, iOS 26, *)
 extension ExtensionHostingView {
-	@MainActor
 	public class Coordinator: NSObject, EXHostViewControllerDelegate {
 		public var connectionHandler: ConnectionHandler?
 
@@ -48,21 +46,18 @@ extension ExtensionHostingView {
 			return true
 		}
 
-		public nonisolated func hostViewControllerDidActivate(_ viewController: EXHostViewController) {
-			MainActor.assumeIsolated {
-				guard let handler = connectionHandler else { return }
+		public func hostViewControllerDidActivate(_ viewController: EXHostViewController) {
+			guard let handler = connectionHandler else { return }
 
-				do {
-					let connection = try viewController.makeXPCConnection()
+			do {
+				let connection = try viewController.makeXPCConnection()
+				
+				handler(connection)
 
-					handler(connection)
-
-					connection.activate()
-				} catch {
-					print("Unable to create connection: \(String(describing: error))")
-				}
+				connection.activate()
+			} catch {
+				print("Unable to create connection: \(String(describing: error))")
 			}
 		}
 	}
 }
-#endif

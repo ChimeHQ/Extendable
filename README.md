@@ -133,23 +133,6 @@ You can its `AppExtensionBrowserView` and `ExtensionHostingView` to integrate th
 let process = try await AppExtensionProcess(appExtensionIdentity: identity)
 ```
 
-## Isolation and AppExtension
-
-Currently, the `init` in the `AppExtention` protocol lacks any isolation. This makes it difficult to initialize instance variables if you are relying on the true-but-unexpressed `@MainActor` isolation of extensions. I've included a workaround that can help. SE-0414 will make this unecessary, as will ExtensionFoundation adding annotations. In the mean time though, it's nice to have no warnings.
-
-```swift
-@main
-final class MyExtension: AppExtension {
-    @InitializerTransferred private var value: MainActorType
-
-    nonisolated init() {
-        self._value = InitializerTransferred(mainActorProvider: {
-            MainActorType()
-        })
-    }
-}
-```
-
 ## Contributing and Collaboration
 
 I would love to hear from you! Issues or pull requests work great. A [Matrix space][matrix] is also available for live help, but I have a strong bias towards answering in the form of documentation.
