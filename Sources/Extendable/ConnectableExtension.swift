@@ -37,3 +37,9 @@ public extension ConnectableExtension {
 		return globalConfiguration
 	}
 }
+
+
+@available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *)
+public protocol NewConnectableExtension: AppExtension {
+	func acceptConnection(_ connection: NSXPCConnection) throws
+}

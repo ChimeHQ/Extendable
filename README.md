@@ -12,7 +12,7 @@ A set of utilities for more pleasant work with [ExtensionKit](https://developer.
 
 ExtensionKit and ExtensionFoundation provide a system for inter-app communcation and operation. They are very cool! For a long time, these frameworks were only functional on macOS, but it looks like they are now supported on other Apple platforms, including iOS. Pretty much everything here has only been tested on macOS, but I'll get to it!
 
-The package is split into two parts. Most of the interesting stuff is on the extension-side. But, there are some handy things for hosting extensions as well.
+The package is split into two parts. Most of the interesting stuff is on the extension-side. But, there are some handy things for hosting extensions as well. There is also a macOS/iOS example project if you want to check out how everything fits together. There's another [example](https://github.com/KhaosT/UIExtensionExample) that doesn't use this library.
 
 If you are here, two other packages you might like are [AsyncXPCConnection](https://github.com/ChimeHQ/AsyncXPCConnection) and [XPCConnectionSession](https://github.com/ChimeHQ/XPCConnectionSession).
 
@@ -127,6 +127,8 @@ struct ConnectionView: View {
 Extendable also includes a second library called `ExtendableHost`.
 
 You can its `AppExtensionBrowserView` and `ExtensionHostingView` to integrate the ExtensionKit view system with SwiftUI in your host application.
+
+It also includes the `AppExtensionMonitor` type. This is a cross-platform `Observable` that wraps `AppExtensionPoint.Monitor` when available, but falls back to `AppExtensionIdentity.matching` for older versions of macOS.
 
 ```swift
 // very simple init extension to help with actor-isolation compatibility

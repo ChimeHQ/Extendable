@@ -24,43 +24,69 @@ extension StaticString {
 @available(macOS 14, iOS 26, *)
 @Observable
 public final class AppExtensionMonitor {
-#if os(macOS)
 	public private(set) var identities: [AppExtensionIdentity] = []
 
 	@ObservationIgnored
 	private var task: Task<Void, Never>?
 
+	@ObservationIgnored
+	private var monitor: Any?
+
 	public init(id: StaticString) throws {
+		if #available(macOS 26, *) {
+			let point = try AppExtensionPoint(identifier: id)
+
+			self.task = Task { [weak self] in
+				self?.monitor = try! await AppExtensionPoint.Monitor(appExtensionPoint: point)
+
+				self?.publish()
+			}
+
+			return
+		}
+
+		#if os(macOS)
 		let identitiesSequence = try AppExtensionIdentity.matching(appExtensionPointIDs: id.string)
 
-		self.task = Task { [weak self] in
-			for await value in identitiesSequence {
-				self?.identities = value
+			self.task = Task { [weak self] in
+				for await value in identitiesSequence {
+					self?.identities = value
+				}
 			}
-		}
+		#endif
+
 	}
 
 	deinit {
 		task?.cancel()
 	}
-	#else
-	@ObservationIgnored
-	private var task: Task<Void, Never>?
 
-	@ObservationIgnored
-	private var monitor: AppExtensionPoint.Monitor?
+	private var monitorIdentities: [AppExtensionIdentity] {
+		guard
+			#available(macOS 26.0, *),
+			let monitor = monitor as? AppExtensionPoint.Monitor
+		else {
+			return []
+		}
 
-	public init(id: StaticString) throws {
-		let point = try AppExtensionPoint(identifier: id)
+		return monitor.identities
+	}
 
-		self.task = Task { [weak self] in
-			self?.monitor = try! await AppExtensionPoint.Monitor(appExtensionPoint: point)
+	private func subscribe() {
+		withObservationTracking {
+			monitorIdentities
+		} onChange: { [weak self] in
+			guard let self else { return }
+
+			publish()
 		}
 	}
 
-	public var identities: [AppExtensionIdentity] {
-		monitor?.identities ?? []
-	}
+	private func publish() {
+		self.identities = monitorIdentities
 
-	#endif
+		Task {
+			self.subscribe()
+		}
+	}
 }
